@@ -21,21 +21,52 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    atlas.home.extraHomeManagerOptions = {
-      home.packages = with pkgs; [ ripgrep ];
+    atlas.home.homeManagerModules = [
+      {
+        home.packages = with pkgs; [
+          ripgrep
+          fd
+          nixfmt-rfc-style
+          editorconfig-core-c
+          fira-code
+          pandoc
+          gcc
+          binutils
+          pamixer
+          cmake
+          gnumake
+          nodePackages.prettier
+          tailwindcss-language-server
+          rustywind
 
-      programs.emacs = {
-        enable = true;
-        package = emacsWithPackages;
-      };
+          # Python
+          python3
+          poetry
+          black
+          isort
+          pyright
+          python311Packages.pyflakes
+        ];
 
-      services.emacs = {
-        enable = true;
-        package = emacsWithPackages;
-        client.enable = true;
-        defaultEditor = true;
-        startWithUserSession = "graphical";
-      };
-    };
+        home.sessionPath = [ "$HOME/.config/emacs/bin" ];
+
+        programs.emacs = {
+          enable = true;
+          package = emacsWithPackages;
+        };
+
+        services.emacs = {
+          enable = true;
+          package = emacsWithPackages;
+          client.enable = true;
+          defaultEditor = true;
+          startWithUserSession = "graphical";
+        };
+
+        systemd.user.services.emacs.Service.Restart = lib.mkForce "always";
+
+        xdg.configFile."doom".source = ./doom;
+      }
+    ];
   };
 }

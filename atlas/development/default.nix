@@ -17,52 +17,54 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    atlas.home.extraHomeManagerOptions = {
-      programs.bash = {
-        enable = true;
-        initExtra = ''
-          source $HOME/.profile
-        '';
-      };
+    atlas.home.homeManagerModules = [
+      {
+        programs.bash = {
+          enable = true;
+          initExtra = ''
+            source $HOME/.profile
+          '';
+        };
 
-      programs.git = {
-        enable = true;
-        userName = config.atlas.me.fullName;
-        userEmail = config.atlas.me.email;
-        ignores = [ ".direnv" ];
-        difftastic.enable = true;
-      };
+        programs.git = {
+          enable = true;
+          userName = config.atlas.me.fullName;
+          userEmail = config.atlas.me.email;
+          ignores = [ ".direnv" ];
+          difftastic.enable = true;
+        };
 
-      programs.ssh = {
-        enable = true;
+        programs.ssh = {
+          enable = true;
 
-        extraConfig = ''
-          AddKeysToAgent yes
-        '';
+          extraConfig = ''
+            AddKeysToAgent yes
+          '';
 
-        matchBlocks = {
-          "radagast" = {
-            host = "radagast radagast.joshkingsley.me";
-            forwardAgent = true;
+          matchBlocks = {
+            "radagast" = {
+              host = "radagast radagast.joshkingsley.me";
+              forwardAgent = true;
+            };
           };
         };
-      };
 
-      programs.direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-      };
+        programs.direnv = {
+          enable = true;
+          nix-direnv.enable = true;
+        };
 
-      home.packages = with pkgs; [
-        nodejs
-        jdk
+        home.packages = with pkgs; [
+          nodejs
+          jdk
 
-        clojure
-        clojure-lsp
-        clj-kondo
-      ];
+          clojure
+          clojure-lsp
+          clj-kondo
+        ];
 
-      xdg.configFile."clojure/deps.edn".source = ./clojure/deps.edn;
-    };
+        xdg.configFile."clojure/deps.edn".source = ./clojure/deps.edn;
+      }
+    ];
   };
 }

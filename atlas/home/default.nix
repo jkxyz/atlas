@@ -25,12 +25,7 @@ in
         description = "The username to which the Atlas Home Manager options will apply.";
       };
 
-      extraHomeManagerOptions = lib.mkOption {
-        type = lib.types.attrs;
-        description = ''
-          Options to be passed to the user's Home Manager configuration.
-        '';
-      };
+      homeManagerModules = lib.mkOption { type = lib.types.listOf lib.types.deferredModule; };
     };
   };
 
@@ -38,19 +33,17 @@ in
     {
       assertions = [
         {
-          assertion = cfg.extraHomeManagerOptions != null -> cfg.enable;
+          assertion = cfg.homeManagerModules != null -> cfg.enable;
           message = "Using an Atlas module with required Home Manager options, but `atlas.home.enable` is false";
         }
       ];
     }
     (lib.mkIf cfg.enable {
-      home-manager.users.${cfg.user} = lib.mkMerge [
-        {
-          home.stateVersion = config.system.stateVersion;
-          xdg.enable = true;
-        }
-        cfg.extraHomeManagerOptions
-      ];
+      home-manager.users.${cfg.user} = {
+        imports = cfg.homeManagerModules;
+        home.stateVersion = config.system.stateVersion;
+        xdg.enable = true;
+      };
     })
   ];
 }

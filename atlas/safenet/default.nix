@@ -30,10 +30,8 @@ in
       plugins = [ pkgs.pcsc-safenet ];
     };
 
-    programs.firefox.policies = firefoxPolicy;
+    # programs.firefox.policies = firefoxPolicy;
 
-    atlas.home.extraHomeManagerOptions = {
-      programs.firefox.policies = firefoxPolicy;
-    };
+    # atlas.home.homeManagerModules = [ { programs.firefox.policies = firefoxPolicy; } ];
   };
 }
