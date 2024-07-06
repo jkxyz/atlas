@@ -19,6 +19,8 @@ in
   config = lib.mkIf cfg.enable {
     atlas.safenet.enable = true;
 
+    programs.firefox.enable = true;
+
     atlas.home.homeManagerModules = [
       {
         home.packages = with pkgs; [
@@ -33,10 +35,6 @@ in
           enable = true;
           startInBackground = true;
         };
-
-        programs.firefox.enable = true;
-
-        # programs.thunderbird.enable = true;
 
         programs.chromium.enable = true;
       }

@@ -7,14 +7,6 @@
 
 let
   cfg = config.atlas.safenet;
-
-  firefoxPolicy = {
-    SecurityDevices = {
-      Add = {
-        "SafeNet" = "${pkgs.pcsc-safenet}/lib/libeToken.so";
-      };
-    };
-  };
 in
 
 {
@@ -30,8 +22,6 @@ in
       plugins = [ pkgs.pcsc-safenet ];
     };
 
-    # programs.firefox.policies = firefoxPolicy;
-
-    # atlas.home.homeManagerModules = [ { programs.firefox.policies = firefoxPolicy; } ];
+    programs.firefox.wrapperConfig.smartcardSupport = true;
   };
 }
