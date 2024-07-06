@@ -12,3 +12,7 @@ update:
 # format project files
 fmt:
     nix fmt
+
+# check Flake outputs
+check:
+    nix flake check

@@ -2,19 +2,31 @@
   description = "Atlas Nix operating system";
 
   inputs = {
-    # # Primary Inputs
-    # Update with `nix run .#update`
+    # Primary Inputs - update with `just update`
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # # Flake Modules
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    lanzaboote.url = "github:nix-community/lanzaboote";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+
+    musnix.url = "github:musnix/musnix";
+
+    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Development
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+
     nixos-flake.url = "github:srid/nixos-flake";
+
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -36,11 +48,13 @@
         , ...
         }:
         {
-          # Flake inputs to be updated periodically
-          # To update, run `nix run .#update`
           nixos-flake.primary-inputs = [
             "nixpkgs"
             "home-manager"
+            "nixos-hardware"
+            "lanzaboote"
+            "musnix"
+            "nix-index-database"
           ];
 
           treefmt = {
@@ -52,6 +66,7 @@
         };
 
       flake = {
+        # ThinkPad E14 Intel laptop, primary work machine
         nixosConfigurations.sparrowhawk = self.nixos-flake.lib.mkLinuxSystem ./systems/sparrowhawk;
       };
     };
