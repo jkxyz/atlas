@@ -11,25 +11,29 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # # Flake Modules
+
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixos-flake.url = "github:srid/nixos-flake";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ inputs.nixos-flake.flakeModule ];
+    inputs@{ self, ... }:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        inputs.nixos-flake.flakeModule
+        inputs.treefmt-nix.flakeModule
+      ];
 
       systems = [ "x86_64-linux" ];
 
       perSystem =
-        {
-          config,
-          self',
-          inputs',
-          pkgs,
-          system,
-          ...
+        { config
+        , self'
+        , inputs'
+        , pkgs
+        , system
+        , ...
         }:
         {
           # Flake inputs to be updated periodically
@@ -39,14 +43,16 @@
             "home-manager"
           ];
 
+          treefmt = {
+            projectRootFile = "flake.nix";
+            programs.nixpkgs-fmt.enable = true;
+          };
+
           devShells.default = pkgs.mkShell { packages = with pkgs; [ just ]; };
         };
 
       flake = {
-        # The usual flake attributes can be defined here, including system-
-        # agnostic ones like nixosModule and system-enumerating ones, although
-        # those are more easily expressed in perSystem.
-
+        nixosConfigurations.sparrowhawk = self.nixos-flake.lib.mkLinuxSystem ./systems/sparrowhawk;
       };
     };
 }

@@ -8,3 +8,7 @@ activate:
 # update primary Flake inputs
 update:
     nix run .#update
+
+# format project files
+fmt:
+    nix fmt
