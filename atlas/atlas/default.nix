@@ -1,0 +1,56 @@
+{ lib, config, ... }:
+
+let
+  cfg = config.atlas;
+
+  personOpts =
+    { name, ... }:
+    {
+      options = {
+        name = lib.mkOption {
+          type = lib.types.str;
+          default = name;
+          description = ''
+            An identifier for the person. Must be valid username.
+          '';
+        };
+
+        fullName = lib.mkOption {
+          type = lib.types.str;
+          description = ''
+            Full name of the person.
+          '';
+        };
+
+        email = lib.mkOption {
+          type = lib.types.str;
+          description = ''
+            Email address used by the person.
+          '';
+        };
+      };
+    };
+in
+
+{
+  options = {
+    atlas = {
+      people = lib.mkOption {
+        type = lib.types.attrsOf (lib.types.submodule personOpts);
+        description = ''
+          Details about people referenced in this configuration.
+        '';
+      };
+
+      me = lib.mkOption { type = lib.types.attrs; };
+    };
+  };
+
+  config = {
+    atlas.people = import ./people.nix;
+
+    atlas.me = cfg.people.josh;
+
+    users.users.${cfg.me.name}.isNormalUser = true;
+  };
+}

@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, modulesPath
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
 }:
 
 {
@@ -37,7 +38,7 @@
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/dev/vg/swap"; }];
+  swapDevices = [ { device = "/dev/vg/swap"; } ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }

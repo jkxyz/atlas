@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 
 {
@@ -86,6 +87,8 @@
     pciutils
     kdePackages.qtmultimedia
     kdePackages.qtwebengine
+    kdePackages.kdialog
+    kdePackages.filelight
     sbctl
   ];
 
@@ -131,22 +134,6 @@
   programs.nix-index.enable = true;
   programs.nix-index.enableBashIntegration = true;
   programs.command-not-found.enable = false;
-
-  services.pcscd = {
-    enable = true;
-    plugins = [ pkgs.pcsc-safenet ];
-  };
-
-  programs.firefox = {
-    enable = true;
-    policies = {
-      SecurityDevices = {
-        Add = {
-          "SafeNet" = "${pkgs.pcsc-safenet}/lib/libeToken.so";
-        };
-      };
-    };
-  };
 
   # Required for SafeNet
   nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];

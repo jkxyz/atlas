@@ -35,17 +35,19 @@
       imports = [
         inputs.nixos-flake.flakeModule
         inputs.treefmt-nix.flakeModule
+        ./atlas/flake-module.nix
       ];
 
       systems = [ "x86_64-linux" ];
 
       perSystem =
-        { config
-        , self'
-        , inputs'
-        , pkgs
-        , system
-        , ...
+        {
+          config,
+          self',
+          inputs',
+          pkgs,
+          system,
+          ...
         }:
         {
           nixos-flake.primary-inputs = [
@@ -59,7 +61,7 @@
 
           treefmt = {
             projectRootFile = "flake.nix";
-            programs.nixpkgs-fmt.enable = true;
+            programs.nixfmt.enable = true;
           };
 
           devShells.default = pkgs.mkShell { packages = with pkgs; [ just ]; };
