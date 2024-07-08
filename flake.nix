@@ -70,6 +70,9 @@
       flake = {
         # ThinkPad E14 Intel laptop, primary work machine
         nixosConfigurations.sparrowhawk = self.nixos-flake.lib.mkLinuxSystem ./systems/sparrowhawk;
+
+        # 2017 MacBook Pro, home server
+        nixosConfigurations.radagast = self.nixos-flake.lib.mkLinuxSystem ./systems/radagast;
       };
     };
 }

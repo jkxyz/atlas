@@ -1,9 +1,9 @@
 @_default:
     just --list
 
-# activate NixOS config for current host
-activate:
-    nix run .#activate
+# activate NixOS config for host
+activate HOSTNAME="localhost":
+    nix run .#activate {{HOSTNAME}}
 
 # update primary Flake inputs
 update:

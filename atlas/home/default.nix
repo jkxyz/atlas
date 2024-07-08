@@ -25,7 +25,10 @@ in
         description = "The username to which the Atlas Home Manager options will apply.";
       };
 
-      homeManagerModules = lib.mkOption { type = lib.types.listOf lib.types.deferredModule; };
+      homeManagerModules = lib.mkOption {
+        type = lib.types.listOf lib.types.deferredModule;
+        default = [ ];
+      };
     };
   };
 
@@ -33,7 +36,7 @@ in
     {
       assertions = [
         {
-          assertion = cfg.homeManagerModules != null -> cfg.enable;
+          assertion = cfg.homeManagerModules != [ ] -> cfg.enable;
           message = "Using an Atlas module with required Home Manager options, but `atlas.home.enable` is false";
         }
       ];

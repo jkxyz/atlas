@@ -28,6 +28,14 @@ let
             Email address used by the person.
           '';
         };
+
+        sshKeys = lib.mkOption {
+          type = lib.types.listOf lib.types.singleLineStr;
+          default = [ ];
+          description = ''
+            SSH public keys owned by this person.
+          '';
+        };
       };
     };
 in
