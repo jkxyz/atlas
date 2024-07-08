@@ -50,14 +50,16 @@ in
         '';
       };
 
-      me = lib.mkOption { type = lib.types.attrs; };
+      me = lib.mkOption {
+        type = lib.types.attrs;
+        readOnly = true;
+        default = cfg.people.josh;
+      };
     };
   };
 
   config = {
     atlas.people = import ./people.nix;
-
-    atlas.me = cfg.people.josh;
 
     users.users.${cfg.me.name}.isNormalUser = true;
   };
