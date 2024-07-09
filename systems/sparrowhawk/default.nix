@@ -17,6 +17,7 @@
 
   atlas.home.enable = true;
   atlas.emacs.enable = true;
+  atlas.emacs2.enable = true;
   atlas.desktop.enable = true;
   atlas.development.enable = true;
 }

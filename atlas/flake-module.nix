@@ -10,6 +10,7 @@
         ./nix
         ./home
         ./emacs
+        ./emacs2
         ./desktop
         ./safenet
         ./development
