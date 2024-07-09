@@ -19,6 +19,9 @@
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
+    doomemacs.url = "github:doomemacs/doomemacs";
+    doomemacs.flake = false;
+
     # Development
 
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -57,6 +60,7 @@
             "lanzaboote"
             "musnix"
             "nix-index-database"
+            "doomemacs"
           ];
 
           treefmt = {

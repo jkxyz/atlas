@@ -21,6 +21,22 @@
         "type": "github"
       }
     },
+    "doomemacs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1720507613,
+        "narHash": "sha256-nBH4yjHJ02GmW4ad1VEtRW6GJQKXDP/ubW93ohhTpdo=",
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "rev": "944eef90ec7962c3b17cf3e6df65bbac5f03dfdc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -319,6 +335,7 @@
     },
     "root": {
       "inputs": {
+        "doomemacs": "doomemacs",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
