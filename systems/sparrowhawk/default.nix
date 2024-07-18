@@ -1,4 +1,4 @@
-{ flake, self, ... }:
+{ flake, ... }:
 
 {
   imports = [
