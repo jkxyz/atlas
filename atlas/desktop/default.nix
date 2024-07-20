@@ -29,6 +29,7 @@ in
           slack
           libreoffice-qt
           thunderbird
+          brave
         ];
 
         services.nextcloud-client = {
