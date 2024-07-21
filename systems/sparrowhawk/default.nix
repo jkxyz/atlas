@@ -15,6 +15,8 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   nixpkgs.config.allowUnfree = true;
 
+  programs.nix-ld.enable = true;
+
   atlas.home.enable = true;
   atlas.emacs.enable = true;
   atlas.desktop.enable = true;
