@@ -81,3 +81,33 @@
   :init
   (setq lsp-tailwindcss-add-on-mode t)
   (add-hook 'before-save-hook 'lsp-tailwindcss-rustywind-before-save))
+
+(use-package! ellama
+  :init
+  (require 'llm-claude)
+  (require 'secrets)
+
+  (let ((api-key (secrets-get-secret "default" "atlas.emacs.ellama.claude.key")))
+    (setopt ellama-provider
+            (make-llm-claude :key api-key
+                             :chat-model "claude-3-5-sonnet-20240620")))
+
+  :config
+  (defun atlas/ellama ()
+    (interactive)
+    (let* ((functions '(ellama-chat
+                        ellama-change
+                        ellama-complete
+                        ellama-code-edit
+                        ellama-code-add
+                        ellama-code-improve
+                        ellama-code-review
+                        ellama-code-complete))
+           (chosen-function (completing-read "Choose a function: " functions nil t)))
+      (call-interactively (intern chosen-function))))
+
+  (map! :leader "SPC" #'atlas/ellama))
+
+(use-package! llm
+  :custom
+  (llm-warn-on-nonfree nil))
