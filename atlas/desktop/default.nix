@@ -30,6 +30,7 @@ in
           libreoffice-qt
           thunderbird
           brave
+          nextcloud-client
         ];
 
         services.nextcloud-client = {
