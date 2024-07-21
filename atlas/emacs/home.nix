@@ -31,6 +31,7 @@
     nodePackages.prettier
     tailwindcss-language-server
     rustywind
+    typescript-language-server
 
     # Python
     python3

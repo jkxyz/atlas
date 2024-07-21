@@ -51,8 +51,6 @@
   services.desktopManager.plasma6.enable = true;
   services.displayManager.defaultSession = "plasma";
 
-  sound.enable = false;
-
   security.rtkit.enable = true;
 
   services.pipewire = {
