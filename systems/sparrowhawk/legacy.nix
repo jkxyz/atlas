@@ -87,6 +87,7 @@
     kdePackages.qtwebengine
     kdePackages.kdialog
     kdePackages.filelight
+    kdePackages.partitionmanager
     sbctl
   ];
 
