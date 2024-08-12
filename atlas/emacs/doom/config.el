@@ -83,18 +83,29 @@
   (add-hook 'before-save-hook 'lsp-tailwindcss-rustywind-before-save))
 
 (use-package! ellama
-  :init
+  :config
   (require 'llm-claude)
   (require 'secrets)
 
-  (let ((api-key (secrets-get-secret "default" "atlas.emacs.ellama.claude.key")))
-    (setopt ellama-provider
-            (make-llm-claude :key api-key
-                             :chat-model "claude-3-5-sonnet-20240620")))
+  (defvar atlas/ellama-initialized nil
+    "Flag to track if ellama has been initialized.")
 
-  :config
+  (defun atlas/init-ellama ()
+    (when (not atlas/ellama-initialized)
+      (message "Initializing atlas/ellama")
+      (if (not secrets-enabled)
+          (error "atlas/ellama: Secret service is not running")
+        (let ((api-key (secrets-get-secret "default" "atlas.emacs.ellama.claude.key")))
+          (if (not api-key)
+              (error "atlas/ellama: Claude API key not found")
+            (setopt ellama-provider
+                    (make-llm-claude :key api-key
+                                     :chat-model "claude-3-5-sonnet-20240620"))
+            (setq atlas/ellama-initialized t))))))
+
   (defun atlas/ellama ()
     (interactive)
+    (atlas/init-ellama)
     (let* ((functions '(ellama-chat
                         ellama-change
                         ellama-complete
