@@ -88,6 +88,7 @@
     kdePackages.kdialog
     kdePackages.filelight
     kdePackages.partitionmanager
+    kdePackages.kcalc
     sbctl
   ];
 
