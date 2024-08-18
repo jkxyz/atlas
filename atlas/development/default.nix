@@ -61,6 +61,8 @@ in
           clojure
           clojure-lsp
           clj-kondo
+
+          vscode
         ];
 
         xdg.configFile."clojure/deps.edn".source = ./clojure/deps.edn;
