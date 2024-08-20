@@ -33,5 +33,7 @@ in
     programs.firefox.policies = firefoxPolicy;
 
     atlas.home.homeManagerModules = [ { programs.firefox.policies = firefoxPolicy; } ];
+
+    nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
   };
 }

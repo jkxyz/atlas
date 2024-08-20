@@ -135,9 +135,6 @@
   programs.nix-index.enableBashIntegration = true;
   programs.command-not-found.enable = false;
 
-  # Required for SafeNet
-  nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
-
   musnix.enable = true;
 
   # TODO Enable tlp

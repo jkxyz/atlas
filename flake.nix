@@ -15,6 +15,7 @@
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
 
     musnix.url = "github:musnix/musnix";
+    musnix.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
