@@ -31,6 +31,11 @@ in
           thunderbird
           brave
           nextcloud-client
+          gnucash
+          hledger
+          ledger
+          krita
+          skanlite
         ];
 
         services.nextcloud-client = {
