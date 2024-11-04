@@ -82,43 +82,11 @@
   (setq lsp-tailwindcss-add-on-mode t)
   (add-hook 'before-save-hook 'lsp-tailwindcss-rustywind-before-save))
 
-(use-package! ellama
+(use-package! gptel
   :config
-  (require 'llm-claude)
   (require 'secrets)
 
-  (defvar atlas/ellama-initialized nil
-    "Flag to track if ellama has been initialized.")
+  (setq gptel-model 'claude-3-5-sonnet-20241022
+        gptel-backend (gptel-make-anthropic "Claude" :stream t :key (secrets-get-secret "default" "atlas.emacs.ellama.claude.key")))
 
-  (defun atlas/init-ellama ()
-    (when (not atlas/ellama-initialized)
-      (message "Initializing atlas/ellama")
-      (if (not secrets-enabled)
-          (error "atlas/ellama: Secret service is not running")
-        (let ((api-key (secrets-get-secret "default" "atlas.emacs.ellama.claude.key")))
-          (if (not api-key)
-              (error "atlas/ellama: Claude API key not found")
-            (setopt ellama-provider
-                    (make-llm-claude :key api-key
-                                     :chat-model "claude-3-5-sonnet-20240620"))
-            (setq atlas/ellama-initialized t))))))
-
-  (defun atlas/ellama ()
-    (interactive)
-    (atlas/init-ellama)
-    (let* ((functions '(ellama-chat
-                        ellama-change
-                        ellama-complete
-                        ellama-code-edit
-                        ellama-code-add
-                        ellama-code-improve
-                        ellama-code-review
-                        ellama-code-complete))
-           (chosen-function (completing-read "Choose a function: " functions nil t)))
-      (call-interactively (intern chosen-function))))
-
-  (map! :leader "SPC" #'atlas/ellama))
-
-(use-package! llm
-  :custom
-  (llm-warn-on-nonfree nil))
+  (map! :leader "SPC" #'gptel-menu))
